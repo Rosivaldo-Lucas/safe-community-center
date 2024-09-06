@@ -98,6 +98,10 @@ public class CommunityCenter implements Serializable {
     this.resources.removeAll(resourcesRemoved);
   }
 
+  public boolean isFullyOccupied() {
+    return this.currentOccupancy >= this.maxCapacity;
+  }
+
   private double calculateOccupancyPercentage(int maxCapacity, int currentOccupancy) {
     return ((double) (100 * currentOccupancy) / maxCapacity);
   }
