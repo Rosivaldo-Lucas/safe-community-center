@@ -38,6 +38,12 @@ public class CommunityCenter implements Serializable {
     this.maxCapacity = maxCapacity;
     this.currentOccupancy = currentOccupancy;
     this.resources = resources;
+
+    this.occupancyPercentage = this.calculateOccupancyPercentage(this.maxCapacity, this.currentOccupancy);
+  }
+
+  private double calculateOccupancyPercentage(int maxCapacity, int currentOccupancy) {
+    return ((double) (100 * currentOccupancy) / maxCapacity);
   }
 
   public String getName() {
