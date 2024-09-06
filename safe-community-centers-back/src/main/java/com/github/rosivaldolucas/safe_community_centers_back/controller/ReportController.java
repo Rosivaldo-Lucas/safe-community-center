@@ -1,5 +1,6 @@
 package com.github.rosivaldolucas.safe_community_centers_back.controller;
 
+import com.github.rosivaldolucas.safe_community_centers_back.dto.AverageResourceCommunityCenterDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCenter;
 import com.github.rosivaldolucas.safe_community_centers_back.service.CommunityCenterService;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,13 @@ public class ReportController {
     Page<CommunityCenter> communityCenters = this.communityCenterService.listCommunityCentersHighOccupancy(minOccupancyPercentage, pageable);
 
     return ResponseEntity.status(HttpStatus.OK).body(communityCenters);
+  }
+
+  @GetMapping("/average-resources")
+  public ResponseEntity<List<AverageResourceCommunityCenterDTO>> listAverageResources() {
+    List<AverageResourceCommunityCenterDTO> averageResourcesPerCommunityCenter = this.communityCenterService.listAverageResources();
+
+    return ResponseEntity.status(HttpStatus.OK).body(averageResourcesPerCommunityCenter);
   }
 
 }

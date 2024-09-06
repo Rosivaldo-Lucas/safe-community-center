@@ -1,6 +1,7 @@
 package com.github.rosivaldolucas.safe_community_centers_back.service;
 
 import com.github.rosivaldolucas.safe_community_centers_back.dto.AddCommunityCenterDTO;
+import com.github.rosivaldolucas.safe_community_centers_back.dto.AverageResourceCommunityCenterDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.dto.UpdateOccupancyCommunityCenterDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCenter;
 import com.github.rosivaldolucas.safe_community_centers_back.repository.CommunityCenterRepository;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,6 +23,10 @@ public class CommunityCenterService {
 
   public Page<CommunityCenter> listCommunityCentersHighOccupancy(double minOccupancyPercentagePageable, Pageable pageable) {
     return this.communityCenterRepository.findByOccupancyPercentageGreaterThanEqual(minOccupancyPercentagePageable, pageable);
+  }
+
+  public List<AverageResourceCommunityCenterDTO> listAverageResources() {
+    return this.communityCenterRepository.calculateAverageResourcesPerCommunityCenter();
   }
 
   public CommunityCenter getCommunityCenterById(UUID communityCenterId) {
