@@ -41,6 +41,8 @@ public class ResourceExchangeService {
     requesterCommunityCenter.containsResources(resourceExchangeRequestDTO.offeredResources());
     receiverCommunityCenter.containsResources(resourceExchangeRequestDTO.requestedResources());
 
+    this.validPointsResourcesRequest(requesterCommunityCenter, receiverCommunityCenter);
+
     ResourceExchangeHistory resourceExchangeHistory = new ResourceExchangeHistory(
             requesterCommunityCenter.getId(),
             receiverCommunityCenter.getId(),
@@ -87,6 +89,12 @@ public class ResourceExchangeService {
     resourceExchangeHistory.reject();
 
     this.resourceExchangeHistoryRepository.save(resourceExchangeHistory);
+  }
+
+  private void validPointsResourcesRequest(CommunityCenter requesterCommunityCenter, CommunityCenter receiverCommunityCenter) {
+    if (requesterCommunityCenter.getTotalPointsResources() != receiverCommunityCenter.getTotalPointsResources() && requesterCommunityCenter.getOccupancyPercentage() < 90) {
+      throw new RuntimeException("The points must be equal for the resource exchange to be valid");
+    }
   }
 
 }

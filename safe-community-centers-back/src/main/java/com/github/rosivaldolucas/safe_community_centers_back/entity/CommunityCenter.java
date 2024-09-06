@@ -1,5 +1,6 @@
 package com.github.rosivaldolucas.safe_community_centers_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -98,8 +99,24 @@ public class CommunityCenter implements Serializable {
     this.resources.removeAll(resourcesRemoved);
   }
 
+  @JsonIgnore
   public boolean isFullyOccupied() {
     return this.currentOccupancy >= this.maxCapacity;
+  }
+
+  @JsonIgnore
+  public int getTotalPointsResources() {
+    return this.calculatePointsResources();
+  }
+
+  private int calculatePointsResources() {
+    int totalPoints = 0;
+
+    for (Resource resource : this.resources) {
+      totalPoints += (resource.getType().getPoints() * resource.getQuantity());
+    }
+
+    return totalPoints;
   }
 
   private double calculateOccupancyPercentage(int maxCapacity, int currentOccupancy) {
