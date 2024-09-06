@@ -7,6 +7,14 @@ public class Resource {
   private ResourceType type;
   private Integer quantity;
 
+  public void addQuantity(int quantityToAdd) {
+    this.quantity += quantityToAdd;
+  }
+
+  public void removeQuantity(int quantityToRemove) {
+    this.quantity -= quantityToRemove;
+  }
+
   public ResourceType getType() {
     return type;
   }

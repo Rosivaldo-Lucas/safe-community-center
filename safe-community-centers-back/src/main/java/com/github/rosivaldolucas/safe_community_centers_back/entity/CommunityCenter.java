@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -57,6 +58,40 @@ public class CommunityCenter implements Serializable {
         throw new IllegalArgumentException("Resource does not exist");
       }
     }
+  }
+
+  public void addResources(Set<Resource> resourcesToAdd) {
+    Set<Resource> newResourcesAdded = new HashSet<>();
+
+    for (Resource resourceToAdd : resourcesToAdd) {
+      this.resources.forEach(resource -> {
+        if (resource.getType().equals(resourceToAdd.getType())) {
+          resource.addQuantity(resourceToAdd.getQuantity());
+        } else {
+          newResourcesAdded.add(resourceToAdd);
+        }
+      });
+    }
+
+    this.resources.addAll(newResourcesAdded);
+  }
+
+  public void removeResources(Set<Resource> resourcesToRemove) {
+    Set<Resource> resourcesRemoved = new HashSet<>();
+
+    for (Resource resourceToRemove : resourcesToRemove) {
+      this.resources.forEach(resource -> {
+        if (resource.getType().equals(resourceToRemove.getType())) {
+          resource.removeQuantity(resourceToRemove.getQuantity());
+
+          if (resource.getQuantity() <= 0) {
+            resourcesRemoved.add(resource);
+          }
+        }
+      });
+    }
+
+    this.resources.removeAll(resourcesRemoved);
   }
 
   private double calculateOccupancyPercentage(int maxCapacity, int currentOccupancy) {

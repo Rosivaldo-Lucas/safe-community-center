@@ -49,6 +49,14 @@ public class CommunityCenterService {
     this.communityCenterRepository.save(newCommunityCenter);
   }
 
+  public void saveCommunityCenter(CommunityCenter communityCenter) {
+    this.communityCenterRepository.save(communityCenter);
+  }
+
+  public void saveAllCommunityCenters(List<CommunityCenter> communityCenters) {
+    this.communityCenterRepository.saveAll(communityCenters);
+  }
+
   public void updateOccupancyCommunityCenter(UUID communityCenterId, UpdateOccupancyCommunityCenterDTO updateOccupancyDTO) {
     CommunityCenter communityCenter = this.getCommunityCenterById(communityCenterId);
 
