@@ -4,6 +4,8 @@ import com.github.rosivaldolucas.safe_community_centers_back.dto.AddCommunityCen
 import com.github.rosivaldolucas.safe_community_centers_back.dto.UpdateOccupancyCommunityCenterDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCenter;
 import com.github.rosivaldolucas.safe_community_centers_back.repository.CommunityCenterRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,6 +17,10 @@ public class CommunityCenterService {
 
   public CommunityCenterService(CommunityCenterRepository communityCenterRepository) {
     this.communityCenterRepository = communityCenterRepository;
+  }
+
+  public Page<CommunityCenter> listCommunityCentersHighOccupancy(double minOccupancyPercentagePageable, Pageable pageable) {
+    return this.communityCenterRepository.findByOccupancyPercentageGreaterThanEqual(minOccupancyPercentagePageable, pageable);
   }
 
   public CommunityCenter getCommunityCenterById(UUID communityCenterId) {
