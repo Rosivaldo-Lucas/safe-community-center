@@ -1,4 +1,16 @@
 services:
+  app-voting-system:
+    container_name: app-scc-phoebus
+    image: desafio/app-scc:0.0.1
+    restart: always
+    depends_on:
+      - mongodb
+      - rabbitmq
+    ports:
+      - "8080:8080"
+    networks:
+      - nt
+
   mongodb:
     image: mongo:latest
     container_name: db
