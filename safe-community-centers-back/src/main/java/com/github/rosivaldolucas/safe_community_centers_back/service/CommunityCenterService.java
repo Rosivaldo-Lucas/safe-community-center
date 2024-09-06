@@ -25,6 +25,10 @@ public class CommunityCenterService {
     this.notificationProducer = notificationProducer;
   }
 
+  public Page<CommunityCenter> listCommunityCenters(Pageable pageable) {
+    return communityCenterRepository.findAll(pageable);
+  }
+
   public Page<CommunityCenter> listCommunityCentersHighOccupancy(double minOccupancyPercentagePageable, Pageable pageable) {
     return this.communityCenterRepository.findByOccupancyPercentageGreaterThanEqual(minOccupancyPercentagePageable, pageable);
   }

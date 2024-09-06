@@ -2,8 +2,11 @@ package com.github.rosivaldolucas.safe_community_centers_back.controller;
 
 import com.github.rosivaldolucas.safe_community_centers_back.dto.AddCommunityCenterDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.dto.UpdateOccupancyCommunityCenterDTO;
+import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCenter;
 import com.github.rosivaldolucas.safe_community_centers_back.service.CommunityCenterService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,20 @@ public class CommunityCenterController {
 
   public CommunityCenterController(CommunityCenterService communityCenterService) {
     this.communityCenterService = communityCenterService;
+  }
+
+  @GetMapping
+  public ResponseEntity<Page<CommunityCenter>> listCommunityCenters(Pageable pageable) {
+    Page<CommunityCenter> communityCenters = communityCenterService.listCommunityCenters(pageable);
+
+    return ResponseEntity.status(HttpStatus.OK).body(communityCenters);
+  }
+
+  @GetMapping("/{communityCenterId}")
+  public ResponseEntity<CommunityCenter> getCommunityCenter(@PathVariable UUID communityCenterId) {
+    CommunityCenter communityCenter = this.communityCenterService.getCommunityCenterById(communityCenterId);
+
+    return ResponseEntity.status(HttpStatus.OK).body(communityCenter);
   }
 
   @PostMapping
