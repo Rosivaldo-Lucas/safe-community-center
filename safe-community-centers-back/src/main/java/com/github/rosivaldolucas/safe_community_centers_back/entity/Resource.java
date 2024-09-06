@@ -2,6 +2,8 @@ package com.github.rosivaldolucas.safe_community_centers_back.entity;
 
 import com.github.rosivaldolucas.safe_community_centers_back.enums.ResourceType;
 
+import java.util.Objects;
+
 public class Resource {
 
   private ResourceType type;
@@ -21,5 +23,18 @@ public class Resource {
 
   public Integer getQuantity() {
     return quantity;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Resource resource = (Resource) o;
+    return type == resource.type;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(type);
   }
 }
