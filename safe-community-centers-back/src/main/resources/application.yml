@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: safe-community-centers-back
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: db-safe-hub
