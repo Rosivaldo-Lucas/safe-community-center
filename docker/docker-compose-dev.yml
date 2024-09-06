@@ -1,15 +1,13 @@
 services:
-  app-voting-system:
+  app-scc-phoebus:
     container_name: app-scc-phoebus
-    image: desafio/app-scc:0.0.1
+    image: desafio/app-scc:0.1.0
     restart: always
     depends_on:
       - mongodb
       - rabbitmq
     ports:
       - "8080:8080"
-    networks:
-      - nt
 
   mongodb:
     image: mongo:latest
@@ -18,8 +16,6 @@ services:
       - "27017:27017"
     volumes:
       - db-mongodb_data:/data/db
-    networks:
-      - nt
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -30,14 +26,8 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/
       - rabbitmq_log:/var/log/rabbitmq/
-    networks:
-      - nt
 
 volumes:
   db-mongodb_data:
   rabbitmq_data:
   rabbitmq_log:
-
-networks:
-  nt:
-    driver: bridge

@@ -114,7 +114,7 @@ docker image build -f docker/Dockerfile -t desafio/app-scc:0.0.1 .
 Na raiz da pasta do projeto, execute o seguinte comando para iniciar os containers Docker necessários para inicializar o projeto
 
 ```bash
-docker compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose-dev.yml up -d
 ```
 
 Este comando irá executar o container do Banco de Dados *MongoDB* e o container do *RabbitMQ*
