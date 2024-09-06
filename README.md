@@ -106,7 +106,7 @@ Este comando irá limpar e buildar o projeto e também irá gerar o *.jar* na pa
 Na raiz da pasta do projeto, execute o seguinte comando para gerar a imagem Docker do projeto
 
 ```bash
-docker image build -f Dockerfile -t desafio/app-vs:0.0.1 .
+docker image build -f docker/Dockerfile -t desafio/app-scc:0.0.1 .
 ```
 
 ### Passo 4: Executar o projeto Safe Community Center
@@ -114,7 +114,7 @@ docker image build -f Dockerfile -t desafio/app-vs:0.0.1 .
 Na raiz da pasta do projeto, execute o seguinte comando para iniciar os containers Docker necessários para inicializar o projeto
 
 ```bash
-docker compose -f docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml up -d
 ```
 
 Este comando irá executar o container do Banco de Dados *MongoDB* e o container do *RabbitMQ*
