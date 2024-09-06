@@ -4,6 +4,7 @@ import com.github.rosivaldolucas.safe_community_centers_back.enums.ResourceExcha
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,6 +19,9 @@ public class ResourceExchangeHistory {
   private Set<Resource> requestedResources;
   private ResourceExchangeStatus status;
 
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+
   public ResourceExchangeHistory(String requesterCommunityCenterId, String receiverCommunityCenterId, Set<Resource> offeredResources, Set<Resource> requestedResources) {
     this.id = UUID.randomUUID().toString();
     this.requesterCommunityCenterId = requesterCommunityCenterId;
@@ -25,6 +29,8 @@ public class ResourceExchangeHistory {
     this.offeredResources = offeredResources;
     this.requestedResources = requestedResources;
     this.status = ResourceExchangeStatus.PENDING;
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
   }
 
   public void accept() {
@@ -33,6 +39,7 @@ public class ResourceExchangeHistory {
     }
 
     this.status = ResourceExchangeStatus.ACCEPTED;
+    this.updatedAt = LocalDateTime.now();
   }
 
   public void reject() {
@@ -41,6 +48,7 @@ public class ResourceExchangeHistory {
     }
 
     this.status = ResourceExchangeStatus.REJECTED;
+    this.updatedAt = LocalDateTime.now();
   }
 
   public boolean isPending() {
@@ -69,5 +77,13 @@ public class ResourceExchangeHistory {
 
   public ResourceExchangeStatus getStatus() {
     return status;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
   }
 }

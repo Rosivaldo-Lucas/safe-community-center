@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -27,6 +28,8 @@ public class CommunityCenter implements Serializable {
   private Double occupancyPercentage;
   private Set<Resource> resources;
 
+  private LocalDateTime createdAt;
+
   public CommunityCenter(String name, String description, String email, String phone, Address address,
                          Integer maxCapacity, Integer currentOccupancy, Set<Resource> resources
   ) {
@@ -39,6 +42,7 @@ public class CommunityCenter implements Serializable {
     this.maxCapacity = maxCapacity;
     this.currentOccupancy = currentOccupancy;
     this.resources = resources;
+    this.createdAt = LocalDateTime.now();
 
     this.occupancyPercentage = this.calculateOccupancyPercentage(this.maxCapacity, this.currentOccupancy);
   }
@@ -136,5 +140,9 @@ public class CommunityCenter implements Serializable {
 
   public Set<Resource> getResources() {
     return resources;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
   }
 }

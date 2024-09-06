@@ -1,5 +1,6 @@
 package com.github.rosivaldolucas.safe_community_centers_back.service;
 
+import com.github.rosivaldolucas.safe_community_centers_back.dto.ResourceExchangeFilterDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.dto.ResourceExchangeRequestDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCenter;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.Resource;
@@ -27,6 +28,10 @@ public class ResourceExchangeService {
   public Page<ResourceExchangeHistory> listResourceExchangeHistories(UUID communityCenterId, Pageable pageable) {
     return this.resourceExchangeHistoryRepository
             .findByRequesterCommunityCenterIdOrReceiverCommunityCenterId(communityCenterId.toString(), communityCenterId.toString(), pageable);
+  }
+
+  public Page<ResourceExchangeHistory> listResourceExchanges(ResourceExchangeFilterDTO filterDTO, Pageable pageable) {
+    return this.resourceExchangeHistoryRepository.findByUpdatedAtBetween(filterDTO.start(), filterDTO.end(), pageable);
   }
 
   public void requestResourceExchange(ResourceExchangeRequestDTO resourceExchangeRequestDTO) {
