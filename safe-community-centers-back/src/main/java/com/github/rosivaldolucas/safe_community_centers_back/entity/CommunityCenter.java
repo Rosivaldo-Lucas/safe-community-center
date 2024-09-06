@@ -42,6 +42,15 @@ public class CommunityCenter implements Serializable {
     this.occupancyPercentage = this.calculateOccupancyPercentage(this.maxCapacity, this.currentOccupancy);
   }
 
+  public void updateOccupancy(int newOccupancy) {
+    if (newOccupancy > this.maxCapacity) {
+      throw new IllegalArgumentException("Maximum capacity exceeded");
+    }
+
+    this.currentOccupancy = newOccupancy;
+    this.occupancyPercentage = this.calculateOccupancyPercentage(this.maxCapacity, this.currentOccupancy);
+  }
+
   private double calculateOccupancyPercentage(int maxCapacity, int currentOccupancy) {
     return ((double) (100 * currentOccupancy) / maxCapacity);
   }
