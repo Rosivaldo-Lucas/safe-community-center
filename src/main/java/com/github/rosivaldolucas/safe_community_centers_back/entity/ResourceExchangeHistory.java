@@ -1,6 +1,7 @@
 package com.github.rosivaldolucas.safe_community_centers_back.entity;
 
 import com.github.rosivaldolucas.safe_community_centers_back.enums.ResourceExchangeStatus;
+import com.github.rosivaldolucas.safe_community_centers_back.exception.DomainException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -35,7 +36,7 @@ public class ResourceExchangeHistory {
 
   public void accept() {
     if (!this.status.equals(ResourceExchangeStatus.PENDING)) {
-      throw new IllegalStateException("Negotiation cannot be accepted because it is already " + this.status);
+      throw new DomainException("Negotiation cannot be accepted because it is already " + this.status);
     }
 
     this.status = ResourceExchangeStatus.ACCEPTED;
@@ -44,7 +45,7 @@ public class ResourceExchangeHistory {
 
   public void reject() {
     if (!this.status.equals(ResourceExchangeStatus.ACCEPTED)) {
-      throw new IllegalStateException("Negotiation cannot be rejected because it is already " + this.status);
+      throw new DomainException("Negotiation cannot be rejected because it is already " + this.status);
     }
 
     this.status = ResourceExchangeStatus.REJECTED;

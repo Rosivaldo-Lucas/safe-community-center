@@ -5,6 +5,7 @@ import com.github.rosivaldolucas.safe_community_centers_back.dto.AverageResource
 import com.github.rosivaldolucas.safe_community_centers_back.dto.NotificationFullyOccupiedDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.dto.UpdateOccupancyCommunityCenterDTO;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCenter;
+import com.github.rosivaldolucas.safe_community_centers_back.exception.DomainException;
 import com.github.rosivaldolucas.safe_community_centers_back.producer.NotificationProducer;
 import com.github.rosivaldolucas.safe_community_centers_back.repository.CommunityCenterRepository;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class CommunityCenterService {
 
   public CommunityCenter getCommunityCenterById(UUID communityCenterId) {
     return this.communityCenterRepository
-            .findById(communityCenterId.toString()).orElseThrow(() -> new RuntimeException("Community center not found"));
+            .findById(communityCenterId.toString()).orElseThrow(() -> new DomainException("Community center not found"));
   }
 
   public void createCommunityCenter(AddCommunityCenterDTO addCommunityCenterDTO) {

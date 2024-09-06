@@ -5,6 +5,7 @@ import com.github.rosivaldolucas.safe_community_centers_back.dto.ResourceExchang
 import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCenter;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.Resource;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.ResourceExchangeHistory;
+import com.github.rosivaldolucas.safe_community_centers_back.exception.DomainException;
 import com.github.rosivaldolucas.safe_community_centers_back.repository.ResourceExchangeHistoryRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,13 +57,13 @@ public class ResourceExchangeService {
   public void acceptNegotiationExchange(UUID resourceExchangeId) {
     ResourceExchangeHistory resourceExchangeHistory = this.resourceExchangeHistoryRepository
             .findById(resourceExchangeId.toString())
-            .orElseThrow(() -> new RuntimeException("Resource exchange not found"));
+            .orElseThrow(() -> new DomainException("Resource exchange not found"));
 
     CommunityCenter requesterCommunityCenter = this.communityCenterService.getCommunityCenterById(resourceExchangeHistory.getRequesterCommunityCenterId());
     CommunityCenter receiverCommunityCenter = this.communityCenterService.getCommunityCenterById(resourceExchangeHistory.getReceiverCommunityCenterId());
 
     if (!resourceExchangeHistory.isPending()) {
-      throw new RuntimeException("Resource exchange is not pending");
+      throw new DomainException("Resource exchange is not pending");
     }
 
     Set<Resource> offeredResources = resourceExchangeHistory.getOfferedResources();
@@ -84,7 +85,7 @@ public class ResourceExchangeService {
   public void rejectResourceExchange(UUID resourceExchangeId) {
     ResourceExchangeHistory resourceExchangeHistory = this.resourceExchangeHistoryRepository
             .findById(resourceExchangeId.toString())
-            .orElseThrow(() -> new RuntimeException("Resource exchange not found"));
+            .orElseThrow(() -> new DomainException("Resource exchange not found"));
 
     resourceExchangeHistory.reject();
 
@@ -93,7 +94,7 @@ public class ResourceExchangeService {
 
   private void validPointsResourcesRequest(CommunityCenter requesterCommunityCenter, CommunityCenter receiverCommunityCenter) {
     if (requesterCommunityCenter.getTotalPointsResources() != receiverCommunityCenter.getTotalPointsResources() && requesterCommunityCenter.getOccupancyPercentage() < 90) {
-      throw new RuntimeException("The points must be equal for the resource exchange to be valid");
+      throw new DomainException("The points must be equal for the resource exchange to be valid");
     }
   }
 

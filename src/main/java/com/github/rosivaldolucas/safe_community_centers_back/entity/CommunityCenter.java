@@ -1,6 +1,7 @@
 package com.github.rosivaldolucas.safe_community_centers_back.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.rosivaldolucas.safe_community_centers_back.exception.DomainException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -50,7 +51,7 @@ public class CommunityCenter implements Serializable {
 
   public void updateOccupancy(int newOccupancy) {
     if (newOccupancy > this.maxCapacity) {
-      throw new IllegalArgumentException("Maximum capacity exceeded");
+      throw new DomainException("Maximum capacity exceeded");
     }
 
     this.currentOccupancy = newOccupancy;
@@ -60,7 +61,7 @@ public class CommunityCenter implements Serializable {
   public void containsResources(Set<Resource> resources) {
     for (Resource resource : resources) {
       if (!this.resources.contains(resource)) {
-        throw new IllegalArgumentException("Resource does not exist");
+        throw new DomainException("Resource does not exist");
       }
     }
   }
