@@ -15,12 +15,8 @@ assim sendo possível planejar e melhor gerenciar os centros comunitários.
     - [Passo 1: Clonar o repositório](#passo-1-clonar-o-repositório)
     - [Passo 2: Gerando .jar do projeto](#passo-2-gerando-jar-do-projeto)
     - [Passo 3: Gerando imagem Docker do projeto](#passo-3-gerando-imagem-docker-do-projeto)
-    - [Passo 4: Executar o projeto Voting System](#passo-4-executar-o-projeto-voting-system)
+    - [Passo 4: Executar o projeto Safe Community Center](#passo-4-executar-o-projeto-safe-community-center)
 - [Testando a API com o Swagger](#-testando-api-com-swagger)
-- [Estrutura do sistema](#-estrutura-do-sistema)
-    - [Diagrama do sistema](#diagrama-do-sistema)
-    - [Relacionamentos](#relacionamentos)
-    - [Projeto e Issues criados para guiar o desenvolvimento do projeto](#projeto-e-issues-criados-para-guiar-o-desenvolvimento-do-projeto)
 - [Próximas etapas e melhorias](#-próximas-etapas-e-melhorias)
 
 ## 🛠️ Tecnologias utilizadas
@@ -86,7 +82,7 @@ em containers e assim fazer com que eles se comuniquem e façam o sistema funcio
 Comece clonando este repositório para sua máquina local. Abra o terminal e execute o seguinte comando:
 
 ```bash
-git clone https://github.com/Rosivaldo-Lucas/voting-system-lifters.git
+git clone https://github.com/Rosivaldo-Lucas/safe-community-center.git
 ```
 
 Isso criará uma cópia local do repositório em seu ambiente
@@ -113,7 +109,7 @@ Na raiz da pasta do projeto, execute o seguinte comando para gerar a imagem Dock
 docker image build -f Dockerfile -t desafio/app-vs:0.0.1 .
 ```
 
-### Passo 4: Executar o projeto Voting System
+### Passo 4: Executar o projeto Safe Community Center
 
 Na raiz da pasta do projeto, execute o seguinte comando para iniciar os containers Docker necessários para inicializar o projeto
 
@@ -121,10 +117,8 @@ Na raiz da pasta do projeto, execute o seguinte comando para iniciar os containe
 docker compose -f docker-compose.yml up -d
 ```
 
-Este comando irá executar o container do Banco de Dados *PostgreSQL*, o container do Banco de Dados em memória *Redis* para Cache
+Este comando irá executar o container do Banco de Dados *MongoDB* e o container do *RabbitMQ*
 e irá executar a aplicação *Spring Boot* na porta *8080*
-
-O sistema vem com alguns dados já inseridos no Banco de Dados para a realização dos testes
 
 ## 📝 Testando API com Swagger
 
@@ -132,26 +126,7 @@ Com o sistema em execução, em seu navegador digite a seguinte URL para abrir a
 
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
-## ⚙️ Estrutura do sistema
-
-### Diagrama do sistema
-
-![Diagrama do Sistema](docs/diagrama-sistema.png)
-
-### Relacionamentos
-
-- Candidato está relacionado com um cargo e um cargo pode está relacionado com vários candidatos
-- Candidato é votado por vários eleitores
-- Eleitor vota em vários candidatos
-- Voto contém todos os registros de voto de eleitor para dado candidato
-
-### Projeto e Issues criados para guiar o desenvolvimento do projeto
-
-- [Projeto](https://github.com/users/Rosivaldo-Lucas/projects/5/views/1)
-- [Issues](https://github.com/Rosivaldo-Lucas/voting-system-lifters/issues?q=is%3Aissue+is%3Aclosed)
-
 ## 🚀 Próximas etapas e melhorias
 
-- Adicionar envio de email para o eleitor apos o voto
-- Adicionar fechamento da votação
+- Efetivar a comunicação com outros sistemas via mensageria
 - Implementar Frontend
