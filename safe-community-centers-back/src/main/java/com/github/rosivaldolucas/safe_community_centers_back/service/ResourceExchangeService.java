@@ -5,6 +5,8 @@ import com.github.rosivaldolucas.safe_community_centers_back.entity.CommunityCen
 import com.github.rosivaldolucas.safe_community_centers_back.entity.Resource;
 import com.github.rosivaldolucas.safe_community_centers_back.entity.ResourceExchangeHistory;
 import com.github.rosivaldolucas.safe_community_centers_back.repository.ResourceExchangeHistoryRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,11 @@ public class ResourceExchangeService {
   public ResourceExchangeService(ResourceExchangeHistoryRepository resourceExchangeHistoryRepository, CommunityCenterService communityCenterService) {
     this.resourceExchangeHistoryRepository = resourceExchangeHistoryRepository;
     this.communityCenterService = communityCenterService;
+  }
+
+  public Page<ResourceExchangeHistory> listResourceExchangeHistories(UUID communityCenterId, Pageable pageable) {
+    return this.resourceExchangeHistoryRepository
+            .findByRequesterCommunityCenterIdOrReceiverCommunityCenterId(communityCenterId.toString(), communityCenterId.toString(), pageable);
   }
 
   public void requestResourceExchange(ResourceExchangeRequestDTO resourceExchangeRequestDTO) {
