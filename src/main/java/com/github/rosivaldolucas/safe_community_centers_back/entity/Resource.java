@@ -9,6 +9,11 @@ public class Resource {
   private ResourceType type;
   private Integer quantity;
 
+  public Resource(ResourceType type, Integer quantity) {
+    this.type = type;
+    this.quantity = quantity;
+  }
+
   public void addQuantity(int quantityToAdd) {
     this.quantity += quantityToAdd;
   }
