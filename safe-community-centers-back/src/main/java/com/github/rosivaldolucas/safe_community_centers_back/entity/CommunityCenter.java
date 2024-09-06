@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
-@Document(collection = "community-center")
+@Document(collection = "community_center")
 public class CommunityCenter implements Serializable {
 
   @Serial
@@ -51,8 +51,20 @@ public class CommunityCenter implements Serializable {
     this.occupancyPercentage = this.calculateOccupancyPercentage(this.maxCapacity, this.currentOccupancy);
   }
 
+  public void containsResources(Set<Resource> resources) {
+    for (Resource resource : resources) {
+      if (!this.resources.contains(resource)) {
+        throw new IllegalArgumentException("Resource does not exist");
+      }
+    }
+  }
+
   private double calculateOccupancyPercentage(int maxCapacity, int currentOccupancy) {
     return ((double) (100 * currentOccupancy) / maxCapacity);
+  }
+
+  public String getId() {
+    return id;
   }
 
   public String getName() {
